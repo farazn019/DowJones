@@ -1,7 +1,6 @@
 #Created By Faraz Naseem....
 
 from tkinter import *
-from StockNames import dowStocks
 import matplotlib.pyplot as plt #This command just imports matplotlib.pyplot, and not the entire library.
 import matplotlib #This command imports the entire matplotlib library.
 from matplotlib.figure import Figure
@@ -12,39 +11,42 @@ from dateutil import rrule
 import random
 import numpy as np
 
+
+#All the other files from this directory are imported here:
+from StockNames import dowStocks
+from stockInfoGathering import dowJonesInformation
+
 matplotlib.use("TKAgg")
 
 
 
+def graph():
+    today = datetime.datetime.now()
+    last_year = today.year - 1
+
+
+    last_year = str(last_year) + '' + str(today.month) + '' + str(today.day)
+    today = str(today.year) + '' + str(today.month) + str(today.day)
+
+    lastyear = datetime.datetime.strptime(last_year, "%Y%m%d")
+    current_date = datetime.datetime.strptime(today, "%Y%m%d")
+
+    x = np.arange(last_year, today, 1)
+  
+    last_year = str(last_year) + '-' + str(today.month) + str(today.day)
+    today = str(today.year) + '-' + str(today.month) + '-' + str(today.day)
+    y = np.arange(yf.download("DJI", last_year, today, today))
+
+    figure = Figure(figsize=(1, 1), dpi=100)
+    a = figure.add_subplot(111)
 
 
 def root():
     main_window = Tk()
     main_window.title("Dow Jones")
     main_window.geometry('1200x1200')
-    
-    today = datetime.datetime.now()
-    last_year = today.year() - 1
-    last_year_date = str(last_year + today.month() + today.day)
-    current_date = str(today.year) + '-' + str(today.month) + '-' + str(today.day)
-    yearly_date = []
-    '''
-    for dt in rrule.rrule(rrule.DAILY, dtstart = datetime.strptime(today, "%Y%m%d"), until = datetime.strptime(current_date, "%Y%m%d"))):
-        yearly_date.append(dt)
-    download_data = yf.download("DJI", '2019-01-01', str(current_date))
-    
-    
-    figure = Figure(figsize=(1, 1), dpi = 100)
-    a = figure.add_subplot(111)
 
     
-    a.plot(x, y)
-
-    canvas = FigureCanvasTkAgg(figure, master=main_window)
-    canvas.draw()
-    canvas.get_tk_widget().pack(side="right")
-    '''    
-
 def subtitle():
     subtitle_frame = Frame(width = 300, height = 50)
     subtitle_frame.place(x = 150, height = 50)
@@ -89,6 +91,7 @@ class dowStock():
 
 def main():
 
+    dowJonesInformation
     root()
     subtitle()
 
@@ -105,8 +108,8 @@ def main():
         column += 19
         stock = dowStock(frame, val, key, row, column)
     
-    
-    frame.mainloop()
 
+        
+    frame.mainloop()
 
 main()
