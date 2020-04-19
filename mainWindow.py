@@ -15,6 +15,7 @@ import numpy as np
 #All the other files from this directory are imported here:
 from StockNames import dowStocks
 from stockInfoGathering import dowJonesInformation
+from dowJonesGraph import dowGraph
 
 matplotlib.use("TKAgg")
 
@@ -91,7 +92,9 @@ class dowStock():
 
 def main():
 
+
     dowJonesInformation
+    dowGraph
     root()
     subtitle()
 
@@ -109,7 +112,6 @@ def main():
         stock = dowStock(frame, val, key, row, column)
     
 
-        
     frame.mainloop()
 
 main()
